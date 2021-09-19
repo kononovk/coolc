@@ -136,6 +136,7 @@ class StackMachine {
                   )
                else abort()
                fi fi;
+            i: Int => push(converter.i2a(i));
             obj: Object => abort();
          esac
       )
