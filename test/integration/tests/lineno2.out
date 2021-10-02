@@ -1,0 +1,4 @@
+#name "./test/integration/tests/lineno2.cl"
+#5 ERROR "!"
+#6 OBJECTID fjdk
+#7 STR_CONST ""

@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+import subprocess
+import os
+from argparse import ArgumentParser
+from termcolor import cprint
+
+
+def get_tests(tests_dir):
+    tests = []
+    for file in os.listdir(tests_dir):
+        if file.endswith('.cl'):
+            tests.append(file[:-3])
+        else:
+            assert file.endswith('.out'), "unknown file extension"
+    return tests
+
+
+def _main():
+    parser = ArgumentParser(prog='test_runner', description='Test runner helper for Cool compiler')
+    parser.add_argument('-t', '--tests', metavar='/path/to/tests', type=str, nargs=1, help='Path to tests directory',
+                        required=True)
+    parser.add_argument('-e', '--exec', metavar='/path/to/executable', type=str, nargs=1,
+                        help='Path to executable file for testing',
+                        required=True)
+    args = parser.parse_args()
+    tests_dir = args.tests[0]
+    executable = args.exec[0]
+    tests = [f'{tests_dir}/{f}' for f in get_tests(tests_dir)]
+    passed_tests = 0
+    for f in tests:
+        result = subprocess.Popen(f'{executable} {f}.cl'.split(), stdout=subprocess.PIPE).communicate()[0]
+        with open(f'{f}.out', 'rb') as result_file:
+            ref_result = result_file.read()
+            if ref_result == result:
+                cprint(f'PASSED: ', 'green', end=' ')
+                print(f'{f}')
+                passed_tests += 1
+            else:
+                cprint(f'FAILED: ', 'red', end=' ')
+                print(f'{f}')
+    print('\nSummary:')
+    if passed_tests > 0:
+        cprint(f'{passed_tests}/{len(tests)} tests passed', 'green')
+    if len(tests) - passed_tests > 0:
+        cprint(f'{len(tests) - passed_tests}/{len(tests)} tests failed', 'red')
+
+
+if __name__ == '__main__':
+    _main()

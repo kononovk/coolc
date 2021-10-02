@@ -1,0 +1,3 @@
+#name "./test/integration/tests/s33.test.cl"
+#3 OBJECTID before_the_comment
+#8 ERROR "EOF in comment"

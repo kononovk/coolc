@@ -1,0 +1,4 @@
+#name "./test/integration/tests/wq0607-c2.cl"
+#3 STR_CONST "(*"
+#3 ERROR "Unmatched *)"
+#3 STR_CONST "*)(*"

@@ -1,0 +1,2 @@
+#name "./test/integration/tests/null_in_string.cl"
+#2 ERROR "String contains null character."

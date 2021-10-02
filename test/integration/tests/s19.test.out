@@ -1,0 +1,4 @@
+#name "./test/integration/tests/s19.test.cl"
+#3 ERROR "Unterminated string constant"
+#3 OBJECTID d
+#4 ERROR "Unterminated string constant"
