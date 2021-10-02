@@ -68,9 +68,8 @@ int main(int argc, char* argv[]) {
 
   for (int i = 1; i < argc; ++i) {
     std::cout << "#name \"" << argv[i] << '\"' << std::endl;
-    // std::cout << "DEBUG INFO: " << ReadAllFile(argv[i]) << std::endl;
     coolc::Lexer lexer(ReadAllFile(argv[i]));
-    auto tokens = lexer.GetAll();
+    auto tokens = lexer.GetAllTokens();
     for (const auto& token : tokens) {
       std::cout << token;
     }

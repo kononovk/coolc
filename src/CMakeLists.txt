@@ -1,5 +1,5 @@
 set(COOLC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-set(COOLC_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/token.hpp)
+set(COOLC_HEADERS token/token.hpp)
 
 macro(add_files)
     set(COOLC_HEADERS ${COOLC_HEADERS} PARENT_SCOPE)
@@ -21,3 +21,7 @@ add_executable(
         ${COOLC_HEADERS}
         ${COOLC_SOURCES}
 )
+
+target_include_directories(${PROJECT_NAME}
+        PUBLIC ${COOLC_SOURCE_DIR}/src
+        )
