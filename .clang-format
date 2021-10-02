@@ -1,0 +1,26 @@
+BasedOnStyle: Google
+Language: Cpp
+Standard: c++17
+UseTab: Never
+DerivePointerAlignment: false
+PointerAlignment: Left
+ColumnLimit: 120
+
+AllowShortLambdasOnASingleLine: None
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortEnumsOnASingleLine: true # if false then enums would be formatted as Allman braces style
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+
+IncludeCategories:
+  - Regex: '^".*"$'              # relative includes
+    Priority: 10
+  - Regex: '^<.*\.hpp>$'         # coolc private includes
+    Priority: 20
+  - Regex: '^<[[:alpha:]_\/]+>$' # STL
+    Priority: 40
+  - Regex: '.*'                  # other libraries
+    Priority: 50
+IncludeBlocks: Regroup
