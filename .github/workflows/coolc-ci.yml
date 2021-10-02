@@ -39,5 +39,4 @@ jobs:
 
       - name: Test
         run:
-          pwd &&
-          test/integration/test_runner  -t test/integration/tests -e build/src/coolc
+          test/e2e/test_runner  -t test/e2e/lexer -e build/src/coolc

@@ -131,6 +131,7 @@ std::optional<Token> Lexer::GetSpecial() {
     std::regex reg(R"((\(\*|\*\)))");
     std::cmatch match;
     int32_t comment_counter = 1;
+    // todo: why str is incorrect here ?
     while (std::regex_search(_sstream.rdbuf()->view().data() + _sstream.tellg(), match, reg)) {
       long pos = _sstream.tellg();
       auto prefix = match.prefix().str();
@@ -148,7 +149,8 @@ std::optional<Token> Lexer::GetSpecial() {
         return NextToken();
       }
     }
-    for (auto el = _sstream.rdbuf()->view().data() + _sstream.tellg(); *el != '\0'; ++el) {
+    auto stream_buf = _sstream.rdbuf()->view();
+    for (auto el = stream_buf.data() + _sstream.tellg(); *el != '\0'; ++el) {
       if (*el == '\n') {
         current_line++;
       }
