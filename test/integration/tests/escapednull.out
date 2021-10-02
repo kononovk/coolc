@@ -1,2 +1,0 @@
-#name "./test/integration/tests/escapednull.cl"
-#1 ERROR "String contains escaped null character."

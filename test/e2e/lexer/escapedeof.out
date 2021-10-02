@@ -1,0 +1,2 @@
+#name "test/e2e/lexer/escapedeof.cl"
+#2 ERROR "EOF in string constant"

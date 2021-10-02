@@ -1,2 +1,0 @@
-#name "./test/integration/tests/eofstring.cl"
-#2 ERROR "Unterminated string constant"

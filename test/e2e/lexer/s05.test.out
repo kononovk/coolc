@@ -1,0 +1,2 @@
+#name "test/e2e/lexer/s05.test.cl"
+#1 STR_CONST "other unescaped whitespace: \t\f\022\013"

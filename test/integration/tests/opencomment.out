@@ -1,2 +1,0 @@
-#name "./test/integration/tests/opencomment.cl"
-#5 ERROR "EOF in comment"

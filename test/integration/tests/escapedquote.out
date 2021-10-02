@@ -1,2 +1,0 @@
-#name "./test/integration/tests/escapedquote.cl"
-#2 ERROR "Unterminated string constant"

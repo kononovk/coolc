@@ -1,0 +1,3 @@
+#name "test/e2e/lexer/s34.test.cl"
+#1 OBJECTID before_it
+#5 ERROR "Unterminated string constant"
