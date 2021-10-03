@@ -13,3 +13,4 @@ make -j coolc
 - [ ] Add abseil result instead of optional
 - [ ] Code refactoring: GetStringLiteral
 - [ ] Unit tests for lexer
+- [ ] Fix CI
