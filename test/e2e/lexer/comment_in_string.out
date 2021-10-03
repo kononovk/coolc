@@ -1,0 +1,4 @@
+#name "test/e2e/lexer/comment_in_string.cl"
+#1 STR_CONST "string (* 123 *) string"
+#3 STR_CONST "string \n(* 123 *)"
+#5 STR_CONST "string (* \n123 *)"

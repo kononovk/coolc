@@ -1,0 +1,4 @@
+#name "test/e2e/lexer/null_in_string_unescaped_newline.cl"
+#2 ERROR "String contains null character."
+#3 OBJECTID a
+#3 '+'

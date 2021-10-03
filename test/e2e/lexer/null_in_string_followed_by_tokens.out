@@ -1,0 +1,4 @@
+#name "test/e2e/lexer/null_in_string_followed_by_tokens.cl"
+#2 ERROR "String contains null character."
+#2 OBJECTID a
+#2 '+'

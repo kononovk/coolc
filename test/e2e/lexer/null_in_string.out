@@ -1,0 +1,2 @@
+#name "test/e2e/lexer/null_in_string.cl"
+#2 ERROR "String contains null character."

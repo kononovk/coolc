@@ -1,0 +1,2 @@
+#name "test/e2e/lexer/escapedquote.cl"
+#2 ERROR "Unterminated string constant"

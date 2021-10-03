@@ -1,0 +1,42 @@
+name: Integration tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  main:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {
+            os: ubuntu-latest,
+            cc: clang-12, cxx: clang++-12,
+          }
+        build_type: [ Debug ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Configure CMake
+        run:
+          mkdir build &&
+          cd build &&
+          cmake ..
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_C_COMPILER=${{ matrix.config.cc }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
+
+      - name: Build
+        run:
+          make -j ./build/Makefile
+
+      - name: Test
+        run:
+          test/e2e/test_runner  -t test/e2e/lexer -e build/src/coolc

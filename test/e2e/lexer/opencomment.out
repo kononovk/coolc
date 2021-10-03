@@ -1,0 +1,2 @@
+#name "test/e2e/lexer/opencomment.cl"
+#5 ERROR "EOF in comment"
