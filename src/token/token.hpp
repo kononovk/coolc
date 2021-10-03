@@ -1,9 +1,10 @@
 #pragma once
 
-#include <cassert>
+#include <array>
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <unordered_map>
 
 namespace coolc {
 
@@ -38,8 +39,8 @@ struct Token {
     Of,
     Not,
     // Special Notation
-    LBrace,     // '{'
-    RBrace,     // '}'
+    LBrace,     // {
+    RBrace,     // }
     LParen,     // (
     RParen,     // )
     Semicolon,  // ;
@@ -56,108 +57,46 @@ struct Token {
     Darrow,     // =>
     Dot,        // .
     Comma,      // ,
-    At,
+    At,         // @
     // number of elements in enum
     Size,
   };
 
-  static constexpr const char* ToString(Type token_type) noexcept {
-    switch (token_type) {
-      // Default token type, represents Error, if optional<string> lexeme != nullopt
-      case Type::Unknown:
-        return "ERROR";
-      // Identifiers
-      case Type::TypeID:
-        return "TYPEID";
-      case Type::ObjectID:
-        return "OBJECTID";
-      // Elemental Types
-      case Type::Integer:
-        return "INT_CONST";
-      case Type::String:
-        return "STR_CONST";
-      // Keywords
-      case Type::Class:
-        return "CLASS";
-      case Type::If:
-        return "IF";
-      case Type::Else:
-        return "ELSE";
-      case Type::Then:
-        return "THEN";
-      case Type::Fi:
-        return "FI";
-      case Type::In:
-        return "IN";
-      case Type::Inherits:
-        return "INHERITS";
-      case Type::Isvoid:
-        return "ISVOID";
-      case Type::Let:
-        return "LET";
-      case Type::Loop:
-        return "LOOP";
-      case Type::Pool:
-        return "POOL";
-      case Type::True:
-        return "BOOL_CONST true";
-      case Type::False:
-        return "BOOL_CONST false";
-      case Type::While:
-        return "WHILE";
-      case Type::Case:
-        return "CASE";
-      case Type::Esac:
-        return "ESAC";
-      case Type::New:
-        return "NEW";
-      case Type::Of:
-        return "OF";
-      case Type::Not:
-        return "NOT";
-      // Special Notation
-      case Type::LBrace:
-        return "'{'";
-      case Type::RBrace:
-        return "'}'";
-      case Type::LParen:
-        return "'('";
-      case Type::RParen:
-        return "')'";
-      case Type::Semicolon:
-        return "';'";
-      case Type::Colon:
-        return "':'";
-      case Type::Plus:
-        return "'+'";
-      case Type::Minus:
-        return "'-'";
-      case Type::Star:
-        return "'*'";
-      case Type::Slash:
-        return "'/'";
-      case Type::Tilde:
-        return "'~'";
-      case Type::Less:
-        return "'<'";
-      case Type::Leq:
-        return "LE";
-      case Type::Equals:
-        return "'='";
-      case Type::Assign:
-        return "ASSIGN";
-      case Type::Darrow:
-        return "DARROW";
-      case Type::Dot:
-        return "'.'";
-      case Type::Comma:
-        return "','";
-      case Type::At:
-        return "'@'";
-      case Type::Size:
-        assert(false);
-    }
-    assert(false);
+  // Only some tokens.
+  static Type FromString(const std::string& str) {
+    static std::unordered_map<std::string, Type> from_str{
+        {"class", Type::Class},   {"in", Type::In},     {"loop", Type::Loop},
+        {"pool", Type::Pool},     {"if", Type::If},     {"true", Type::True},
+        {"false", Type::False},   {"else", Type::Else}, {"inherits", Type::Inherits},
+        {"while", Type::While},   {"case", Type::Case}, {"fi", Type::Fi},
+        {"isvoid", Type::Isvoid}, {"esac", Type::Esac}, {"new", Type::New},
+        {"of", Type::Of},         {"not", Type::Not},   {"then", Type::Then},
+        {"let", Type::Let},       {"{", Type::LBrace},  {"}", Type::RBrace},
+        {"(", Type::LParen},      {")", Type::RParen},  {";", Type::Semicolon},
+        {":", Type::Colon},       {"+", Type::Plus},    {"-", Type::Minus},
+        {"*", Type::Star},        {"/", Type::Slash},   {"~", Type::Tilde},
+        {"<", Type::Less},        {"=", Type::Equals},  {".", Type::Dot},
+        {",", Type::Comma},       {"@", Type::At},
+    };
+    auto it = from_str.find(str);
+    return it == from_str.end() ? Type::Unknown : it->second;
+  }
+
+  static const char* ToString(Type token_type) noexcept {
+    constexpr static std::array to_str{"ERROR",
+                                       // Identifiers
+                                       "TYPEID", "OBJECTID",
+                                       // Elemental Types
+                                       "INT_CONST", "STR_CONST",
+                                       // Keywords
+                                       "CLASS", "IF", "ELSE", "THEN", "FI", "IN", "INHERITS", "ISVOID", "LET", "LOOP",
+                                       "POOL", "BOOL_CONST true", "BOOL_CONST false", "WHILE", "CASE", "ESAC", "NEW",
+                                       "OF", "NOT",
+                                       // Special Notation
+                                       "'{'", "'}'", "'('", "')'", "';'", "':'", "'+'", "'-'", "'*'", "'/'", "'~'",
+                                       "'<'", "LE", "ASSIGN", "'='", "DARROW", "'.'", "','", "'@'"};
+
+    return to_str[static_cast<unsigned>(token_type)];
   }
 
   Type type{Type::Unknown};

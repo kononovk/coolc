@@ -1,5 +1,5 @@
 set(COOLC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-set(COOLC_HEADERS token/token.hpp)
+set(COOLC_HEADERS)
 
 macro(add_files)
     set(COOLC_HEADERS ${COOLC_HEADERS} PARENT_SCOPE)
@@ -10,6 +10,7 @@ add_compile_options(${YACLIB_COMPILE_OPTIONS})
 add_link_options(${YACLIB_LINK_OPTIONS})
 
 add_subdirectory(lexer)
+add_subdirectory(token)
 
 # TODO: add_library ?!
 #[[ add_library(
