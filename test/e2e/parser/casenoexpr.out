@@ -1,0 +1,4 @@
+"test/e2e/parser/casenoexpr.cl", line 7: syntax error at or near OF
+"test/e2e/parser/casenoexpr.cl", line 9: syntax error at or near DARROW
+"test/e2e/parser/casenoexpr.cl", line 10: syntax error at or near ESAC
+Compilation halted due to lex and parse errors

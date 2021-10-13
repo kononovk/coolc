@@ -1,0 +1,2 @@
+"test/e2e/parser/classbadname.cl", line 1: syntax error at or near OBJECTID = test
+Compilation halted due to lex and parse errors
