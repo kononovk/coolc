@@ -73,7 +73,7 @@ Token Lexer::NextToken() {
   return MakeToken(token_type, lexeme);
 }
 
-std::vector<Token> Lexer::GetAllTokens() {
+std::vector<Token> Lexer::Tokenize() {
   auto is_eof = [](const Token& token) {
     return !token.lexeme && token.type == Token::Type::Unknown;
   };
@@ -81,6 +81,7 @@ std::vector<Token> Lexer::GetAllTokens() {
   for (auto token = NextToken(); !is_eof(token); token = NextToken()) {
     result.push_back(std::move(token));
   }
+  result.push_back(MakeToken(Token::Type::Unknown));
   return result;
 }
 
@@ -156,7 +157,7 @@ std::optional<Token> Lexer::GetSpecial() {
         return MakeToken(Token::Type::Unknown, "Unmatched *)");
       default:
         _sstream.putback(next);
-        return MakeToken(Token::Type::Star);
+        return MakeToken(Token::Type::Mul);
     }
   }
   if (curr == '<') {

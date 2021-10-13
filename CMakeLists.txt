@@ -11,6 +11,24 @@ if (COOLC_SOURCE_DIR STREQUAL COOLC_BINARY_DIR)
     message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.")
 endif ()
 
+# Yaclib: my library for concurrent task execution
+# check github page: https://github.com/YACLib/YACLib.git
+include(FetchContent)
+FetchContent_Declare(yaclib
+        GIT_REPOSITORY https://github.com/YACLib/YACLib.git
+        GIT_TAG main
+        )
+FetchContent_MakeAvailable(yaclib)
+link_libraries(yaclib)
+
+FetchContent_Declare(abseil-cpp
+        GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
+        GIT_TAG 20210324.2
+        )
+FetchContent_MakeAvailable(abseil-cpp)
+link_libraries(absl::statusor)
+message("Abseil")
+
 # Set variables
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

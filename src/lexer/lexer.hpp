@@ -16,7 +16,7 @@ class Lexer {
 
   Token NextToken();
 
-  std::vector<Token> GetAllTokens();
+  std::vector<Token> Tokenize();
 
  private:
   void SkipWs();

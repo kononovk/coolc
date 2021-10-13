@@ -11,6 +11,8 @@ add_link_options(${YACLIB_LINK_OPTIONS})
 
 add_subdirectory(lexer)
 add_subdirectory(token)
+add_subdirectory(parser)
+add_subdirectory(util)
 
 # TODO: add_library ?!
 #[[ add_library(
