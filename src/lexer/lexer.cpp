@@ -266,7 +266,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
 
 std::optional<Token> Lexer::GetKeyword(const std::string& keyword) {
   std::regex reg(
-      R"((class|if|else|fi|in|inherits|isvoid|loop|pool|true|false|while|case|esac|new|of|not|then|let)(\W)*)",
+      R"(^(class|if|else|fi|inherits|in|isvoid|loop|pool|true|false|while|case|esac|new|of|not|then|let)(\W+.*)*)",
       std::regex_constants::icase);
 
   std::smatch match;
@@ -281,7 +281,12 @@ std::optional<Token> Lexer::GetKeyword(const std::string& keyword) {
   });
 
   long pos = _sstream.tellg();
-  _sstream.seekg(pos - match[2].length());
+  if (pos == -1) {
+    std::stringstream new_sstr{std::string{keyword.begin() + match[1].length(), keyword.end()}};
+    _sstream.swap(new_sstr);
+  } else {
+    _sstream.seekg(pos - (keyword.size() - match[1].length()));
+  }
 
   auto token_type = Token::FromString(little_str);
   if (token_type == Token::Type::Unknown || (token_type == Token::Type::True && !std::islower(keyword[0])) ||

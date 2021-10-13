@@ -1,0 +1,4 @@
+#name "test/e2e/lexer/keywords_and_specials.cl"
+#1 FI
+#1 ':'
+#1 FI
