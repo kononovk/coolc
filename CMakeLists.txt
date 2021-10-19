@@ -21,14 +21,6 @@ FetchContent_Declare(yaclib
 FetchContent_MakeAvailable(yaclib)
 link_libraries(yaclib)
 
-FetchContent_Declare(abseil-cpp
-        GIT_REPOSITORY https://github.com/abseil/abseil-cpp.git
-        GIT_TAG 20210324.2
-        )
-FetchContent_MakeAvailable(abseil-cpp)
-link_libraries(absl::statusor)
-message("Abseil")
-
 # Set variables
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -47,6 +39,11 @@ if (COOLC_ENABLE_LTO)
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 else ()
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
+endif ()
+
+if (NOT COOLC_COMPILER)
+    set(COOLC_COMPILER PARSER)
+    message("Default COOLC_COMPILER option: ${COOLC_COMPILER}")
 endif ()
 
 if (MSVC)

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <token/token.hpp>
+#include "token/token.hpp"
 
 #include <cstdint>
 #include <optional>

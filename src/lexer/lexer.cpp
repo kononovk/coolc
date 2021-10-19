@@ -1,5 +1,6 @@
-#include <lexer/lexer.hpp>
-#include <token/token.hpp>
+#include "lexer/lexer.hpp"
+
+#include "token/token.hpp"
 
 #include <cassert>
 #include <cstdint>
@@ -16,13 +17,18 @@ namespace coolc {
 namespace {
 
 // just private helper to skip characters after null character in string
-void SkipAfterNull(std::stringstream& ss) {
-  while (!ss.eof() && ss.peek() != '\n' && ss.peek() != '"') {
-    ss.get();
+void SkipAfterNull(std::stringstream* ss) {
+  while (!ss->eof() && ss->peek() != '\n' && ss->peek() != '"') {
+    ss->get();
   }
-  if (ss.peek() == '"') {
-    ss.get();
+  if (ss->peek() == '"') {
+    ss->get();
   }
+}
+
+// pre-condition: lexeme.size() > 0
+bool IsTypeId(std::string_view lexeme) {
+  return std::isupper(lexeme[0]);
 }
 
 }  // namespace
@@ -57,26 +63,22 @@ Token Lexer::NextToken() {
   }
   std::regex rgx;
   Token::Type token_type{};
-  if (std::isupper(lexeme[0])) {
+  if (IsTypeId(lexeme)) {
     rgx = R"(^[A-Z]\w*)";
     token_type = Token::Type::TypeID;
-  } else if (std::islower(lexeme[0])) {
+  } else {
     rgx = R"(^[a-z]\w*)";
     token_type = Token::Type::ObjectID;
   }
   std::smatch match;
   std::regex_search(lexeme, match, rgx);
   lexeme = match[0];
-  long pos = _sstream.tellg();
-  long offset = match.suffix().str().size();
-  _sstream.seekg(pos - offset);
+  _sstream.seekg(-match.suffix().length(), std::ios_base::cur);
   return MakeToken(token_type, lexeme);
 }
 
 std::vector<Token> Lexer::Tokenize() {
-  auto is_eof = [](const Token& token) {
-    return !token.lexeme && token.type == Token::Type::Unknown;
-  };
+  auto is_eof = [](const Token& token) { return !token.lexeme && token.type == Token::Type::Unknown; };
   std::vector<Token> result;
   for (auto token = NextToken(); !is_eof(token); token = NextToken()) {
     result.push_back(std::move(token));
@@ -93,7 +95,8 @@ void Lexer::SkipWs() {
   }
 }
 
-// pre-condition: string_stream is inside multiline comment
+/// pre-condition: string_stream is inside multiline comment
+/// skip comment and get next token or return error
 Token Lexer::SkipComment() {
   std::regex reg(R"((\(\*|\*\)))");
   std::cmatch match;
@@ -218,11 +221,11 @@ std::optional<Token> Lexer::GetStringLiteral() {
   }
   std::string buffer{};
   char c = _sstream.get();
-  size_t buflen = 0;
+  size_t buf_len = 0;
   while (!_sstream.eof()) {
     char n = _sstream.peek();
     if (n == '\0') {
-      SkipAfterNull(_sstream);
+      SkipAfterNull(&_sstream);
       return MakeToken(Token::Type::Unknown, "String contains null character.");
     }
     if (n == '\n') {
@@ -232,7 +235,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
     }
     if (n == '"') {
       _sstream.get(c);
-      if (buflen > 1024) {
+      if (buf_len > 1024) {
         return MakeToken(Token::Type::Unknown, "String constant too long");
       }
       return MakeToken(Token::Type::String, buffer);
@@ -241,7 +244,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
       _sstream.get(c);
       char next = _sstream.peek();
       if (next == '\0') {
-        SkipAfterNull(_sstream);
+        SkipAfterNull(&_sstream);
         return MakeToken(Token::Type::Unknown, "String contains escaped null character.");
       } else if (next == std::char_traits<char>::eof()) {
         return MakeToken(Token::Type::Unknown, "EOF in string constant");
@@ -263,7 +266,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
       buffer += _sstream.peek();
       _sstream.get(c);
     }
-    buflen++;
+    buf_len++;
   }
   return MakeToken(Token::Type::Unknown, "EOF in string constant");
 }
@@ -280,9 +283,7 @@ std::optional<Token> Lexer::GetKeyword(const std::string& keyword) {
 
   // todo: rewrite to std::ranges::views::transform
   std::string little_str = match[1].str();
-  std::for_each(little_str.begin(), little_str.end(), [](char& el) {
-    el = std::tolower(el);
-  });
+  std::for_each(little_str.begin(), little_str.end(), [](char& el) { el = std::tolower(el); });
 
   long pos = _sstream.tellg();
   if (pos == -1) {

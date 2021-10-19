@@ -9,7 +9,7 @@
 namespace coolc {
 
 struct Token {
-  enum Type : unsigned {
+  enum class Type : unsigned {
     // Default token type, represents Error, if optional<string> lexeme != nullopt
     Unknown = 0,
     // Identifiers

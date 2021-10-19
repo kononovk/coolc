@@ -6,6 +6,11 @@ macro(add_files)
     set(COOLC_SOURCES ${COOLC_SOURCES} PARENT_SCOPE)
 endmacro()
 
+
+configure_file(config.hpp.in ${COOLC_BINARY_DIR}/include/coolc/config.hpp)
+
+add_files(COOLC_HEADERS ${COOLC_BINARY_DIR}/include/coolc/config.hpp)
+
 add_compile_options(${YACLIB_COMPILE_OPTIONS})
 add_link_options(${YACLIB_LINK_OPTIONS})
 
@@ -13,6 +18,7 @@ add_subdirectory(lexer)
 add_subdirectory(token)
 add_subdirectory(parser)
 add_subdirectory(util)
+add_subdirectory(ast)
 
 # TODO: add_library ?!
 #[[ add_library(
@@ -26,5 +32,6 @@ add_executable(
 )
 
 target_include_directories(${PROJECT_NAME}
+        PUBLIC ${COOLC_BINARY_DIR}/include/ # for config.hpp
         PUBLIC ${COOLC_SOURCE_DIR}/src
         )
