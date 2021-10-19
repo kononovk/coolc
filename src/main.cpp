@@ -24,32 +24,7 @@ std::ostream& operator<<(std::ostream& os, const coolc::Token& token) {
     if (token.type == coolc::Token::Type::String || token.type == coolc::Token::Unknown) {
       os << "\"";
     }
-    if (token.type == coolc::Token::Type::String) {
-      auto& to_print = *token.lexeme;
-      for (auto el : to_print) {
-        if (el == '\n') {
-          std::cout << "\\n";
-        } else if (el == '\t') {
-          std::cout << "\\t";
-        } else if (el == '\r') {
-          std::cout << "\\015";
-        } else if (el == '\b') {
-          std::cout << "\\b";
-        } else if (el == '\f') {
-          std::cout << "\\f";
-        } else if (el == '\x1B') {
-          std::cout << "\\e";
-        } else if (el == '\x12') {
-          std::cout << "\\022";
-        } else if (el == '\x0b') {
-          std::cout << "\\013";
-        } else {
-          std::cout << el;
-        }
-      }
-    } else {
-      os << *token.lexeme;
-    }
+    os << *token.lexeme;
     if (token.type == coolc::Token::Type::String || token.type == coolc::Token::Unknown) {
       os << "\"";
     }

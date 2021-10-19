@@ -205,7 +205,8 @@ std::optional<Token> Lexer::GetIntLiteral() {
 
 std::optional<Token> Lexer::GetStringLiteral() {
   static const std::unordered_map<char, const char*> escaped_sequences = {
-      {'\t', "\\t"}, {'\b', "\\b"}, {'\r', "\\015"}, {'\f', "\\f"}, {'\033', "\\033"}, {'\\', "\\\\"}, {'\n', "\\n"}};
+      {'\t', "\\t"},  {'\b', "\\b"}, {'\r', "\\015"},   {'\f', "\\f"},     {'\033', "\\033"},
+      {'\\', "\\\\"}, {'\n', "\\n"}, {'\x0b', "\\013"}, {'\x12', "\\022"}, {'\x1B', "\\e"}};
   static const std::unordered_map<char, const char*> char_to_escape = {
       {'t', "\\t"}, {'n', "\\n"}, {'b', "\\b"}, {'f', "\\f"}, {'\033', "\\033"}, {'\\', "\\\\"}, {'"', "\\\""}};
 
