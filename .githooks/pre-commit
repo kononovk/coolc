@@ -55,5 +55,4 @@ def fix_format():
 
 
 if __name__ == '__main__':
-    pass
-    # fix_format()
+    fix_format()

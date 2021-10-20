@@ -13,3 +13,6 @@ or
 ```bash
 cp ./.githooks/pre-commit ./.git/hooks/
 ```
+
+# Available git hooks:
+* pre-commit: do auto clang-format and linebreak at the end of each file in git diff before every commit
