@@ -9,7 +9,7 @@
 namespace coolc {
 
 struct Token {
-  enum Type : unsigned {
+  enum class Type : unsigned {
     // Default token type, represents Error, if optional<string> lexeme != nullopt
     Unknown = 0,
     // Identifiers
@@ -47,7 +47,7 @@ struct Token {
     Colon,      // :
     Plus,       // +
     Minus,      // -
-    Star,       // *
+    Mul,        // *
     Slash,      // /
     Tilde,      // ~
     Less,       // <
@@ -74,7 +74,7 @@ struct Token {
         {"let", Type::Let},       {"{", Type::LBrace},  {"}", Type::RBrace},
         {"(", Type::LParen},      {")", Type::RParen},  {";", Type::Semicolon},
         {":", Type::Colon},       {"+", Type::Plus},    {"-", Type::Minus},
-        {"*", Type::Star},        {"/", Type::Slash},   {"~", Type::Tilde},
+        {"*", Type::Mul},         {"/", Type::Slash},   {"~", Type::Tilde},
         {"<", Type::Less},        {"=", Type::Equals},  {".", Type::Dot},
         {",", Type::Comma},       {"@", Type::At},
     };

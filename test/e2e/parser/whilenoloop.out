@@ -1,0 +1,2 @@
+"test/e2e/parser/whilenoloop.cl", line 3: syntax error at or near INT_CONST = 5
+Compilation halted due to lex and parse errors

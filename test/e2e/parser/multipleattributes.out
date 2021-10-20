@@ -1,0 +1,52 @@
+#1
+_program
+  #1
+  _class
+    A
+    Object
+    "test/e2e/parser/multipleattributes.cl"
+    (
+    #2
+    _attr
+      x
+      Int
+      #0
+      _no_expr
+      : _no_type
+    #3
+    _attr
+      y
+      Bool
+      #0
+      _no_expr
+      : _no_type
+    #4
+    _attr
+      z
+      Object
+      #0
+      _no_expr
+      : _no_type
+    #5
+    _method
+      f
+      Bool
+      #6
+      _bool
+        1
+      : _no_type
+    #8
+    _attr
+      a
+      String
+      #0
+      _no_expr
+      : _no_type
+    #9
+    _attr
+      a
+      IO
+      #0
+      _no_expr
+      : _no_type
+    )

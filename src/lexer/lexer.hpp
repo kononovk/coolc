@@ -1,6 +1,6 @@
 #pragma once
 
-#include <token/token.hpp>
+#include "token/token.hpp"
 
 #include <cstdint>
 #include <optional>
@@ -16,7 +16,7 @@ class Lexer {
 
   Token NextToken();
 
-  std::vector<Token> GetAllTokens();
+  std::vector<Token> Tokenize();
 
  private:
   void SkipWs();

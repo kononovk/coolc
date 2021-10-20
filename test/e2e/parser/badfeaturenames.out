@@ -1,0 +1,3 @@
+"test/e2e/parser/badfeaturenames.cl", line 2: syntax error at or near TYPEID = F
+"test/e2e/parser/badfeaturenames.cl", line 8: syntax error at or near TYPEID = Y
+Compilation halted due to lex and parse errors

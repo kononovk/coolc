@@ -1,0 +1,2 @@
+"test/e2e/parser/emptyassign.cl", line 4: syntax error at or near ';'
+Compilation halted due to lex and parse errors

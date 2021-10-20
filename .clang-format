@@ -6,7 +6,6 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 ColumnLimit: 120
 
-AllowShortLambdasOnASingleLine: None
 AllowShortFunctionsOnASingleLine: None
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: false
@@ -17,10 +16,10 @@ AllowShortLoopsOnASingleLine: false
 IncludeCategories:
   - Regex: '^".*"$'              # relative includes
     Priority: 10
-  - Regex: '^<.*\.hpp>$'         # coolc private includes
+  - Regex: '^<.*\.hpp>$'         # coolc includes
     Priority: 20
   - Regex: '^<[[:alpha:]_\/]+>$' # STL
-    Priority: 40
+    Priority: 30
   - Regex: '.*'                  # other libraries
-    Priority: 50
+    Priority: 40
 IncludeBlocks: Regroup

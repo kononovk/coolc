@@ -4,12 +4,21 @@ project(coolc)
 
 set(COOLC_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(COOLC_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
-# set(EXECUTABLE_OUTPUT_PATH "bin")
 
 # Include guards
 if (COOLC_SOURCE_DIR STREQUAL COOLC_BINARY_DIR)
     message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.")
 endif ()
+
+# Yaclib: my library for concurrent task execution
+# check github page: https://github.com/YACLib/YACLib.git
+include(FetchContent)
+FetchContent_Declare(yaclib
+        GIT_REPOSITORY https://github.com/YACLib/YACLib.git
+        GIT_TAG main
+        )
+FetchContent_MakeAvailable(yaclib)
+link_libraries(yaclib)
 
 # Set variables
 set(CMAKE_CXX_STANDARD 20)
@@ -31,6 +40,11 @@ else ()
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION OFF)
 endif ()
 
+if (NOT COOLC_COMPILER)
+    set(COOLC_COMPILER PARSER)
+    message("Default COOLC_COMPILER option: ${COOLC_COMPILER}")
+endif ()
+
 if (MSVC)
     list(APPEND COOLC_COMPILE_OPTIONS /W3)
     #TODO We have to use /Wall. But MSVC is dumb and uses this flag for external projects, like gtest.
@@ -39,7 +53,9 @@ if (MSVC)
     endif ()
 else ()
     list(APPEND COOLC_COMPILE_OPTIONS -Wall -Wextra -pedantic)
-    if (COOLC_SANITIZER STREQUAL ASAN)
+    if (COOLC_SANITIZER STREQUAL NOTHING)
+        message("All sanitizers disabled")
+    elseif (COOLC_SANITIZER STREQUAL ASAN)
         set(SANITIZER_ENABLE_OPTION -fsanitize=address)
         set(SANITIZER_COMPILE_OPTIONS
                 # -fsanitize-address-use-after-return=runtime

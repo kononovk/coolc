@@ -1,0 +1,2 @@
+"test/e2e/parser/equalsassociativity.out", line 5: syntax error at or near INT_CONST = 1
+Compilation halted due to lex and parse errors
