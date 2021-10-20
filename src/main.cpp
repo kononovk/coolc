@@ -1,4 +1,4 @@
-#include "./lexer/lexer.hpp"
+#include <lexer/lexer.hpp>
 
 #include <filesystem>
 #include <fstream>

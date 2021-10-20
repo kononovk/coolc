@@ -6,7 +6,6 @@
 #include <cstring>
 #include <limits>
 #include <optional>
-#include <ranges>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -99,17 +98,20 @@ Token Lexer::SkipComment() {
   std::cmatch match;
   int32_t comment_counter = 1;
   // todo: why str is incorrect here ?
-  while (std::regex_search(_sstream.rdbuf()->view().data() + _sstream.tellg(), match, reg)) {
+  auto tmp_sstream = _sstream.str();  // todo: stupid compiler/STL in CI
+  auto tmp_sstream_offset = _sstream.tellg();
+  while (std::regex_search(tmp_sstream.c_str() + tmp_sstream_offset, match, reg)) {
     auto prefix = match.prefix().str();
     long offset = prefix.size() + match[0].length();
     current_line += std::count(prefix.begin(), prefix.end(), '\n');
     _sstream.seekg(_sstream.tellg() + offset);
+    tmp_sstream_offset = _sstream.tellg();
     comment_counter += match[0].str() == "*)" ? -1 : 1;
     if (comment_counter == 0) {
       return NextToken();
     }
   }
-  for (auto el = _sstream.rdbuf()->view().data() + _sstream.tellg(); *el != '\0'; ++el) {
+  for (auto el = tmp_sstream.c_str() + _sstream.tellg(); *el != '\0'; ++el) {
     if (*el == '\n') {
       current_line++;
     }
