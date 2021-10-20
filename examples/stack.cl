@@ -1,10 +1,12 @@
 (*
- *  CS164 Fall 94
- *
- *  Programming Assignment 1
- *    Implementation of a simple stack machine.
- *
- *  Skeleton file
+ * Implementation of a simple stack machine as example of Cool language
+ * Command Meanings:
+ *   - int push the integer int on the stack
+ *   - + push a ‘+’ on the stack
+ *   - s push an ‘s’ on the stack
+ *   - e evaluate the top of the stack (see below)
+ *   - d display contents of the stack
+ *   - x stop
  *)
 
 class List {

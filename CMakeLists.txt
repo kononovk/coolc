@@ -54,7 +54,9 @@ if (MSVC)
     endif ()
 else ()
     list(APPEND COOLC_COMPILE_OPTIONS -Wall -Wextra -pedantic)
-    if (COOLC_SANITIZER STREQUAL ASAN)
+    if (COOLC_SANITIZER STREQUAL NOTHING)
+        message("All sanitizers disabled")
+    elseif (COOLC_SANITIZER STREQUAL ASAN)
         set(SANITIZER_ENABLE_OPTION -fsanitize=address)
         set(SANITIZER_COMPILE_OPTIONS
                 # -fsanitize-address-use-after-return=runtime
