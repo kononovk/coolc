@@ -1,6 +1,6 @@
-# Cool language compiler
+# Coolc
 
-Compiler for [Cool](https://en.wikipedia.org/wiki/Cool_(programming_language)) (Classroom Object-Oriented Language).
+_Compiler for [Cool](https://en.wikipedia.org/wiki/Cool_(programming_language)) (Classroom Object-Oriented Language)._
 
 ### Simple Cool program:
 ```text
