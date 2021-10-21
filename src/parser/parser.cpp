@@ -12,7 +12,7 @@
 namespace coolc {
 
 Parser::Parser(const std::vector<Token>& tokens, std::string filename)
-    : next_{tokens.cbegin()}, filename_(std::move(filename)) {
+    : filename_(std::move(filename)), next_{tokens.cbegin()} {
 }
 
 Program Parser::ParseProgram() {
@@ -65,6 +65,7 @@ std::optional<Feature> Parser::ParseFeature() {
     return {std::move(res)};
   }
   Assert(false);
+  return {};  // unreachable code, just to avoid warnings
 }
 
 Attribute Parser::ParseAttributeFeature() {

@@ -101,8 +101,9 @@ Token Lexer::SkipComment() {
   std::regex reg(R"((\(\*|\*\)))");
   std::cmatch match;
   int32_t comment_counter = 1;
-  // todo: why str is incorrect here ?
-  auto tmp_sstream = _sstream.str();  // todo: stupid compiler/STL in CI
+  // TODO: why str is incorrect here ?
+  // TODO: stupid compiler/STL in CI, change this code latter
+  auto tmp_sstream = _sstream.str();
   auto tmp_sstream_offset = _sstream.tellg();
   while (std::regex_search(tmp_sstream.c_str() + tmp_sstream_offset, match, reg)) {
     auto prefix = match.prefix().str();
@@ -281,11 +282,12 @@ std::optional<Token> Lexer::GetKeyword(const std::string& keyword) {
     return {};
   }
 
-  // todo: rewrite to std::ranges::views::transform
+  // TODO: rewrite to std::ranges::views::transform
   std::string little_str = match[1].str();
   std::for_each(little_str.begin(), little_str.end(), [](char& el) { el = std::tolower(el); });
 
   long pos = _sstream.tellg();
+  // TODO: rewrite this code, this is very ugly
   if (pos == -1) {
     std::stringstream new_sstr{std::string{keyword.begin() + match[1].length(), keyword.end()}};
     _sstream.swap(new_sstr);

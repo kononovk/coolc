@@ -26,7 +26,7 @@ endif ()
 add_compile_options(${COOLC_COMPILE_OPTIONS})
 add_link_options(${COOLC_LINK_OPTIONS})
 
-#TODO: Add options which shuffle tests list
+# TODO: Add options which shuffle tests list
 set(COOLC_UNIT_TESTS
         unit/lexer
         unit/parser
