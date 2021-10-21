@@ -15,6 +15,8 @@ if (NOT GTEST_FOUND)
     set(GTEST_BOTH_LIBRARIES GTest::gtest GTest::gtest_main)
 endif ()
 
+link_libraries(GTest::gtest GTest::gtest_main)
+
 if (ENABLE_LTO)
     set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
 else ()
@@ -27,8 +29,10 @@ add_link_options(${COOLC_LINK_OPTIONS})
 #TODO: Add options which shuffle tests list
 set(COOLC_UNIT_TESTS
         unit/lexer
+        unit/parser
+        unit/semant
         )
-
+link_libraries(lib${PROJECT_NAME})
 set(COOLC_TEST_SOURCES ${COOLC_UNIT_TESTS})
 
 foreach (TEST_SOURCE ${COOLC_TEST_SOURCES})

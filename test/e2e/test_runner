@@ -48,7 +48,9 @@ def _main():
         cprint(f'{passed_tests}/{len(tests)} tests passed', 'green')
     if len(tests) - passed_tests > 0:
         cprint(f'{len(tests) - passed_tests}/{len(tests)} tests failed', 'red')
+    return 0 if len(tests) == passed_tests else 1
 
 
 if __name__ == '__main__':
-    _main()
+    status = _main()
+    exit(status)

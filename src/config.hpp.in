@@ -1,4 +1,1 @@
 #pragma once
-
-// LEXER, PARSER, SEMANT, ALL
-#define COOLC_${COOLC_COMPILER}
