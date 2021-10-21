@@ -3,7 +3,7 @@
 _Compiler for [Cool](https://en.wikipedia.org/wiki/Cool_(programming_language)) (Classroom Object-Oriented Language)._
 
 ### Simple Cool program:
-```text
+```cool
 class Main inherits IO {
     pal(s : String) : Bool {
 	if s.length() = 0
