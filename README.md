@@ -2,6 +2,10 @@
 
 _Compiler for [Cool](https://en.wikipedia.org/wiki/Cool_(programming_language)) (Classroom Object-Oriented Language)._
 
+[![End to end tests](https://github.com/kononovk/coolc/actions/workflows/e2e-ci.yml/badge.svg?branch=main)](https://github.com/kononovk/coolc/actions/workflows/e2e-ci.yml)
+[![Unit tests](https://github.com/kononovk/coolc/actions/workflows/unit-ci.yml/badge.svg)](https://github.com/kononovk/coolc/actions/workflows/unit-ci.yml)
+[![Check code format](https://github.com/kononovk/coolc/actions/workflows/code_format.yml/badge.svg)](https://github.com/kononovk/coolc/actions/workflows/code_format.yml)
+
 ### Simple Cool program:
 ```cool
 class Main inherits IO {
