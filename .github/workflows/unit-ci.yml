@@ -1,4 +1,4 @@
-name: End to end tests
+name: Unit tests
 
 on:
   push:
@@ -21,17 +21,11 @@ jobs:
           }
         build_type: [ RelWithDebInfo ]
         stl_implementation: [ libstdc++ ]
-        sanitizer: [ASAN, TSAN, UBSAN, NOTHING ]
+        sanitizer: [ ASAN, TSAN, UBSAN, OFF ]
 
+    name: "${{ matrix.config.os }} / ${{ matrix.sanitizer }}"
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install Dependencies
-        run:
-          python -m pip install --upgrade pip
-          pip install termcolor
 
       - name: Configure CMake
         run:
@@ -43,6 +37,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=${{ matrix.config.cxx }}
           -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stl_implementation }}
           -DCOOLC_SANITIZER=${{ matrix.sanitizer }}
+          -DBUILD_TESTING=ON
 
       - name: Build
         run:
@@ -50,4 +45,5 @@ jobs:
 
       - name: Test
         run:
-          test/e2e/test_runner  -t test/e2e/lexer -e build/src/coolc
+          cd build &&
+          ctest --output-on-failure -C ${{ matrix.build_type }} -V

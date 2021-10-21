@@ -1,4 +1,4 @@
-set(COOLC_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+set(COOLC_SOURCES)
 set(COOLC_HEADERS)
 
 macro(add_files)
@@ -11,8 +11,8 @@ configure_file(config.hpp.in ${COOLC_BINARY_DIR}/include/coolc/config.hpp)
 
 add_files(COOLC_HEADERS ${COOLC_BINARY_DIR}/include/coolc/config.hpp)
 
-add_compile_options(${YACLIB_COMPILE_OPTIONS})
-add_link_options(${YACLIB_LINK_OPTIONS})
+add_compile_options(${COOLC_COMPILE_OPTIONS})
+add_link_options(${COOLC_LINK_OPTIONS})
 
 add_subdirectory(lexer)
 add_subdirectory(token)
@@ -20,18 +20,13 @@ add_subdirectory(parser)
 add_subdirectory(util)
 add_subdirectory(ast)
 
-# TODO: add_library ?!
-#[[ add_library(
-        ${PROJECT_NAME} STATIC
+add_library(
+        lib${PROJECT_NAME} STATIC
         ${COOLC_SOURCES}
-)]]
-add_executable(
-        ${PROJECT_NAME}
         ${COOLC_HEADERS}
-        ${COOLC_SOURCES}
 )
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(lib${PROJECT_NAME}
         PUBLIC ${COOLC_BINARY_DIR}/include/ # for config.hpp
         PUBLIC ${COOLC_SOURCE_DIR}/src
         )
