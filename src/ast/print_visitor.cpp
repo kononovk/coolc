@@ -117,7 +117,7 @@ void PrintExpression(const Expression& expression, int offset) {
       [&offset_str](const Bool& expr) { std::cout << offset_str << expr.value << std::endl; },
       [&offset_str](const Id& expr) { std::cout << offset_str << expr.name << std::endl; },
       [&offset_str](const New& expr) { std::cout << offset_str << expr.type << std::endl; },
-      [](const Empty& expr) {},
+      [](const Empty&) {},
       [offset](const If& expr) {
         PrintExpression(*expr.condition, offset);
         PrintExpression(*expr.then_expr, offset);
@@ -177,7 +177,7 @@ void PrintExpression(const Expression& expression, int offset) {
         }
         std::cout << offset_str << ')' << std::endl;
       },
-      [](const auto& expr) { std::terminate(); }};
+      [](const auto&) { std::terminate(); }};
 
   std::visit(visitor, expression.data_);
   std::cout << std::string(offset - 2, ' ') << ": _no_type" << std::endl;

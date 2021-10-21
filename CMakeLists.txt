@@ -32,7 +32,7 @@ endif ()
 
 if (MSVC)
     list(APPEND COOLC_COMPILE_OPTIONS /W3)
-    #TODO We have to use /Wall. But MSVC is dumb and uses this flag for external projects, like gtest.
+    # TODO We have to use /Wall. But MSVC is dumb and uses this flag for external projects, like gtest.
     if (COOLC_SANITIZER)
         message("Sanitizer's work only on Linux")
     endif ()
