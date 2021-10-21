@@ -160,7 +160,7 @@ Expression Parser::ParseNot() {
   }
   auto line = next_->line;
   next_++;
-  return {Not{line, std::make_shared<Expression>(ParseNot())}};  // TODO: check and new tests
+  return {Not{line, std::make_shared<Expression>(ParseNot())}};
 }
 
 /// expr (<|<=|=) expr
