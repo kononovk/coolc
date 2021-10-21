@@ -1,0 +1,2 @@
+*.cl linguist-detectable=false
+.out linguist-detectable=false
