@@ -36,7 +36,7 @@ More examples you can check in [examples](/examples) directory.
 ```bash
 mkdir build
 cd build
-cmake .. [-DCOOLC_SANITIZER=UBSAN/ASAN/TSAN/MEMSAN] [-DBUILD_TESTING=ON]
+cmake .. [-DCOOLC_SANITIZER=UBSAN/ASAN/TSAN] [-DBUILD_TESTING=ON]
 cmake --build . [--target lexer/parser/semant/coolc]
 ```
 

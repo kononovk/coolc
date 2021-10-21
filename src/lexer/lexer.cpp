@@ -33,7 +33,7 @@ bool IsTypeId(std::string_view lexeme) {
 
 }  // namespace
 
-Lexer::Lexer(std::string source_code) : _sstream(std::move(source_code)) {
+Lexer::Lexer(std::string source_code) : _current_line{1}, _sstream{std::move(source_code)} {
 }
 
 Token Lexer::NextToken() {
@@ -59,7 +59,7 @@ Token Lexer::NextToken() {
 
   // ObjectID / TypeID
   if (!std::isalpha(lexeme[0])) {
-    return Token{.lexeme = "Unknown error", .line = current_line};
+    return Token{.lexeme = "Unknown error", .line = _current_line};
   }
   std::regex rgx;
   Token::Type token_type{};
@@ -90,7 +90,7 @@ std::vector<Token> Lexer::Tokenize() {
 void Lexer::SkipWs() {
   while (_sstream.good() && std::isspace(_sstream.peek())) {
     if (_sstream.get() == '\n') {
-      current_line++;
+      _current_line++;
     }
   }
 }
@@ -108,7 +108,7 @@ Token Lexer::SkipComment() {
   while (std::regex_search(tmp_sstream.c_str() + tmp_sstream_offset, match, reg)) {
     auto prefix = match.prefix().str();
     long offset = prefix.size() + match[0].length();
-    current_line += std::count(prefix.begin(), prefix.end(), '\n');
+    _current_line += std::count(prefix.begin(), prefix.end(), '\n');
     _sstream.seekg(_sstream.tellg() + offset);
     tmp_sstream_offset = _sstream.tellg();
     comment_counter += match[0].str() == "*)" ? -1 : 1;
@@ -118,7 +118,7 @@ Token Lexer::SkipComment() {
   }
   for (auto el = tmp_sstream.c_str() + _sstream.tellg(); *el != '\0'; ++el) {
     if (*el == '\n') {
-      current_line++;
+      _current_line++;
     }
   }
   _sstream.setstate(std::stringstream::eofbit);
@@ -147,7 +147,7 @@ std::optional<Token> Lexer::GetSpecial() {
     switch (next) {
       case '-':
         _sstream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        current_line++;
+        _current_line++;
         return NextToken();
       default:
         _sstream.putback(next);
@@ -231,7 +231,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
     }
     if (n == '\n') {
       _sstream.get(c);
-      current_line++;
+      _current_line++;
       return MakeToken(Token::Type::Unknown, "Unterminated string constant");
     }
     if (n == '"') {
@@ -254,7 +254,7 @@ std::optional<Token> Lexer::GetStringLiteral() {
       } else if (escaped_sequences.contains(next)) {
         buffer.append(escaped_sequences.at(next));
         if (next == '\n') {
-          current_line++;
+          _current_line++;
         }
       } else {
         buffer.push_back(next);
@@ -321,11 +321,11 @@ std::optional<Token> Lexer::CheckInvalid(char ch) {
 }
 
 Token Lexer::MakeToken(Token::Type type) {
-  return {.type = type, .line = current_line};
+  return {.type = type, .line = _current_line};
 }
 
 Token Lexer::MakeToken(Token::Type type, std::string lexeme) {
-  return {.type = type, .lexeme = std::move(lexeme), .line = current_line};
+  return {.type = type, .lexeme = std::move(lexeme), .line = _current_line};
 }
 
 }  // namespace coolc

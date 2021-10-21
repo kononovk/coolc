@@ -31,7 +31,7 @@ class Lexer {
   Token MakeToken(Token::Type type);
   Token MakeToken(Token::Type type, std::string lexeme);
 
-  uint32_t current_line = 1;
+  uint32_t _current_line;
   std::stringstream _sstream;
 };
 

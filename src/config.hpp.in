@@ -1,1 +1,4 @@
 #pragma once
+
+// ASAN, TSAN, UBSAN, MEMSAN
+#define COOLC_${COOLC_SANITIZER}
