@@ -6,7 +6,7 @@ _Compiler for [Cool](https://en.wikipedia.org/wiki/Cool_(programming_language)) 
 [![Unit tests](https://github.com/kononovk/coolc/actions/workflows/unit-ci.yml/badge.svg)](https://github.com/kononovk/coolc/actions/workflows/unit-ci.yml)
 [![Check code format](https://github.com/kononovk/coolc/actions/workflows/code_format.yml/badge.svg)](https://github.com/kononovk/coolc/actions/workflows/code_format.yml)
 
-### Simple Cool program:
+### Simple Cool program
 ```cool
 class Main inherits IO {
     pal(s : String) : Bool {
@@ -36,7 +36,7 @@ class Main inherits IO {
 ```
 More examples you can check in [examples](/examples) directory.
 
-### Hot to build:
+### How to build
 ```bash
 mkdir build
 cd build
@@ -44,7 +44,7 @@ cmake .. [-DCOOLC_SANITIZER=UBSAN/ASAN/TSAN] [-DBUILD_TESTING=ON]
 cmake --build . [--target lexer/parser/semant/coolc]
 ```
 
-### How to run end-to-end tests:
+### How to run end-to-end tests
 ```bash
 test/e2e/test_runner -t path/to/test_dir -e path/to/executable
 ```
