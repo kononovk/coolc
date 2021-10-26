@@ -1,0 +1,807 @@
+#1
+_program
+  #1
+  _class
+    StackCommand
+    Object
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #2
+    _attr
+      parameter
+      String
+      #0
+      _no_expr
+      : _no_type
+    #4
+    _method
+      init
+      #4
+      _formal
+        parameter_
+        String
+      SELF_TYPE
+      #5
+      _block
+        #6
+        _assign
+          parameter
+          #6
+          _object
+            parameter_
+          : _no_type
+        : _no_type
+        #7
+        _object
+          self
+        : _no_type
+      : _no_type
+    #11
+    _method
+      get_param
+      String
+      #11
+      _object
+        parameter
+      : _no_type
+    #14
+    _method
+      run
+      #14
+      _formal
+        stack
+        Stack
+      Object
+      #14
+      _dispatch
+        #14
+        _object
+          self
+        : _no_type
+        abort
+        (
+        )
+      : _no_type
+    #15
+    _method
+      display
+      String
+      #15
+      _block
+        #15
+        _dispatch
+          #15
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #15
+        _string
+          "unknown"
+        : _no_type
+      : _no_type
+    #16
+    _method
+      eval
+      #16
+      _formal
+        stack
+        Stack
+      Object
+      #16
+      _dispatch
+        #16
+        _object
+          self
+        : _no_type
+        abort
+        (
+        )
+      : _no_type
+    )
+  #19
+  _class
+    NoopCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #20
+    _method
+      run
+      #20
+      _formal
+        stack
+        Stack
+      Object
+      #20
+      _int
+        1
+      : _no_type
+    #21
+    _method
+      display
+      String
+      #21
+      _block
+        #21
+        _dispatch
+          #21
+          _object
+            self
+          : _no_type
+          abort
+          (
+          )
+        : _no_type
+        #21
+        _string
+          "unknown"
+        : _no_type
+      : _no_type
+    #22
+    _method
+      eval
+      #22
+      _formal
+        stack
+        Stack
+      Object
+      #22
+      _dispatch
+        #22
+        _object
+          self
+        : _no_type
+        abort
+        (
+        )
+      : _no_type
+    )
+  #25
+  _class
+    PlusCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #26
+    _method
+      run
+      #26
+      _formal
+        stack
+        Stack
+      Object
+      #27
+      _dispatch
+        #27
+        _object
+          stack
+        : _no_type
+        push
+        (
+        #27
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #30
+    _method
+      display
+      String
+      #30
+      _dispatch
+        #30
+        _object
+          self
+        : _no_type
+        get_param
+        (
+        )
+      : _no_type
+    #32
+    _method
+      eval
+      #32
+      _formal
+        stack
+        Stack
+      Object
+      #33
+      _let
+        first_int
+        Int
+        #33
+        _dispatch
+          #33
+          _object
+            self
+          : _no_type
+          read_int
+          (
+          #33
+          _object
+            stack
+          : _no_type
+          )
+        : _no_type
+        #34
+        _let
+          second_int
+          Int
+          #34
+          _dispatch
+            #34
+            _object
+              self
+            : _no_type
+            read_int
+            (
+            #34
+            _object
+              stack
+            : _no_type
+            )
+          : _no_type
+          #35
+          _let
+            sum
+            Int
+            #35
+            _plus
+              #35
+              _object
+                first_int
+              : _no_type
+              #35
+              _object
+                second_int
+              : _no_type
+            : _no_type
+            #36
+            _let
+              result_cmd
+              IntegerCommand
+              #36
+              _dispatch
+                #36
+                _new
+                  IntegerCommand
+                : _no_type
+                init
+                (
+                #36
+                _dispatch
+                  #36
+                  _new
+                    A2I
+                  : _no_type
+                  i2a
+                  (
+                  #36
+                  _object
+                    sum
+                  : _no_type
+                  )
+                : _no_type
+                )
+              : _no_type
+              #38
+              _dispatch
+                #38
+                _object
+                  stack
+                : _no_type
+                push
+                (
+                #38
+                _object
+                  result_cmd
+                : _no_type
+                )
+              : _no_type
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    #41
+    _method
+      read_int
+      #41
+      _formal
+        stack
+        Stack
+      Int
+      #42
+      _typcase
+        #42
+        _dispatch
+          #42
+          _object
+            stack
+          : _no_type
+          pop
+          (
+          )
+        : _no_type
+        #43
+        _branch
+          intCommand
+          IntegerCommand
+          #43
+          _dispatch
+            #43
+            _object
+              intCommand
+            : _no_type
+            to_int
+            (
+            )
+          : _no_type
+        #44
+        _branch
+          o
+          Object
+          #44
+          _block
+            #44
+            _dispatch
+              #44
+              _object
+                self
+              : _no_type
+              abort
+              (
+              )
+            : _no_type
+            #44
+            _int
+              0
+            : _no_type
+          : _no_type
+      : _no_type
+    )
+  #49
+  _class
+    IntegerCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #50
+    _attr
+      data
+      Int
+      #0
+      _no_expr
+      : _no_type
+    #52
+    _method
+      run
+      #52
+      _formal
+        stack
+        Stack
+      Object
+      #53
+      _dispatch
+        #53
+        _object
+          stack
+        : _no_type
+        push
+        (
+        #53
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #56
+    _method
+      display
+      String
+      #56
+      _dispatch
+        #56
+        _object
+          self
+        : _no_type
+        get_param
+        (
+        )
+      : _no_type
+    #58
+    _method
+      eval
+      #58
+      _formal
+        stack
+        Stack
+      Object
+      #59
+      _dispatch
+        #59
+        _object
+          stack
+        : _no_type
+        push
+        (
+        #59
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #62
+    _method
+      to_int
+      Int
+      #62
+      _dispatch
+        #62
+        _new
+          A2I
+        : _no_type
+        a2i
+        (
+        #62
+        _dispatch
+          #62
+          _object
+            self
+          : _no_type
+          get_param
+          (
+          )
+        : _no_type
+        )
+      : _no_type
+    )
+  #65
+  _class
+    SwapCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #66
+    _method
+      run
+      #66
+      _formal
+        stack
+        Stack
+      Object
+      #67
+      _dispatch
+        #67
+        _object
+          stack
+        : _no_type
+        push
+        (
+        #67
+        _object
+          self
+        : _no_type
+        )
+      : _no_type
+    #70
+    _method
+      display
+      String
+      #70
+      _dispatch
+        #70
+        _object
+          self
+        : _no_type
+        get_param
+        (
+        )
+      : _no_type
+    #72
+    _method
+      eval
+      #72
+      _formal
+        stack
+        Stack
+      Object
+      #73
+      _let
+        first_cmd
+        Object
+        #73
+        _dispatch
+          #73
+          _object
+            stack
+          : _no_type
+          pop
+          (
+          )
+        : _no_type
+        #74
+        _let
+          second_cmd
+          Object
+          #74
+          _dispatch
+            #74
+            _object
+              stack
+            : _no_type
+            pop
+            (
+            )
+          : _no_type
+          #75
+          _block
+            #76
+            _dispatch
+              #76
+              _object
+                stack
+              : _no_type
+              push
+              (
+              #76
+              _object
+                first_cmd
+              : _no_type
+              )
+            : _no_type
+            #77
+            _dispatch
+              #77
+              _object
+                stack
+              : _no_type
+              push
+              (
+              #77
+              _object
+                second_cmd
+              : _no_type
+              )
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    )
+  #82
+  _class
+    EvalCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #83
+    _method
+      run
+      #83
+      _formal
+        stack
+        Stack
+      Object
+      #84
+      _cond
+        #84
+        _comp
+          #84
+          _dispatch
+            #84
+            _object
+              stack
+            : _no_type
+            empty
+            (
+            )
+          : _no_type
+        : _no_type
+        #85
+        _let
+          cmd
+          StackCommand
+          #86
+          _typcase
+            #86
+            _dispatch
+              #86
+              _object
+                stack
+              : _no_type
+              pop
+              (
+              )
+            : _no_type
+            #87
+            _branch
+              command
+              StackCommand
+              #87
+              _object
+                command
+              : _no_type
+            #88
+            _branch
+              o
+              Object
+              #88
+              _block
+                #88
+                _dispatch
+                  #88
+                  _object
+                    self
+                  : _no_type
+                  abort
+                  (
+                  )
+                : _no_type
+                #88
+                _new
+                  StackCommand
+                : _no_type
+              : _no_type
+          : _no_type
+          #91
+          _dispatch
+            #91
+            _object
+              cmd
+            : _no_type
+            eval
+            (
+            #91
+            _object
+              stack
+            : _no_type
+            )
+          : _no_type
+        : _no_type
+        #93
+        _int
+          1
+        : _no_type
+      : _no_type
+    )
+  #98
+  _class
+    DisplayCommand
+    StackCommand
+    "test/e2e/parser/stackmachine.cl"
+    (
+    #99
+    _method
+      run
+      #99
+      _formal
+        stack
+        Stack
+      Object
+      #100
+      _let
+        head
+        StackNode
+        #100
+        _dispatch
+          #100
+          _object
+            stack
+          : _no_type
+          to_list
+          (
+          )
+        : _no_type
+        #101
+        _loop
+          #101
+          _comp
+            #101
+            _isvoid
+              #101
+              _object
+                head
+              : _no_type
+            : _no_type
+          : _no_type
+          #101
+          _block
+            #102
+            _let
+              current_item
+              StackCommand
+              #103
+              _typcase
+                #103
+                _dispatch
+                  #103
+                  _object
+                    head
+                  : _no_type
+                  get_item
+                  (
+                  )
+                : _no_type
+                #104
+                _branch
+                  stack_cmd
+                  StackCommand
+                  #104
+                  _object
+                    stack_cmd
+                  : _no_type
+                #105
+                _branch
+                  o
+                  Object
+                  #105
+                  _block
+                    #105
+                    _dispatch
+                      #105
+                      _object
+                        self
+                      : _no_type
+                      abort
+                      (
+                      )
+                    : _no_type
+                    #105
+                    _new
+                      StackCommand
+                    : _no_type
+                  : _no_type
+              : _no_type
+              #108
+              _dispatch
+                #108
+                _new
+                  IO
+                : _no_type
+                out_string
+                (
+                #108
+                _dispatch
+                  #108
+                  _dispatch
+                    #108
+                    _object
+                      current_item
+                    : _no_type
+                    display
+                    (
+                    )
+                  : _no_type
+                  concat
+                  (
+                  #108
+                  _string
+                    "\n"
+                  : _no_type
+                  )
+                : _no_type
+                )
+              : _no_type
+            : _no_type
+            #109
+            _assign
+              head
+              #109
+              _dispatch
+                #109
+                _object
+                  head
+                : _no_type
+                get_next
+                (
+                )
+              : _no_type
+            : _no_type
+          : _no_type
+        : _no_type
+      : _no_type
+    )

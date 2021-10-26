@@ -27,7 +27,7 @@ constexpr const char* GetBinaryExpressionName() {
   } else if constexpr (std::is_same_v<T, Less>) {
     return "_lt";
   } else if constexpr (std::is_same_v<T, LessEq>) {
-    return "_le";
+    return "_leq";
   } else if constexpr (std::is_same_v<T, Equal>) {
     return "_eq";
   } else {
@@ -140,7 +140,7 @@ void PrintExpression(const Expression& expression, int offset) {
         const auto& args = expr.attrs;
         for (std::size_t i = 0; i < args.size(); ++i) {
           if (i != 0) {
-            std::cout << std::string(offset - 2, ' ') << '#' << expr.line_number << std::endl;
+            std::cout << std::string(offset - 2, ' ') << '#' << expr.attrs[i].line_number << std::endl;
             std::cout << std::string(offset - 2, ' ') << "_let" << std::endl;
           }
           std::cout << std::string(offset, ' ') << expr.attrs[i].object_id << std::endl;

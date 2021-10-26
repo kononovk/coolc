@@ -1,0 +1,54 @@
+#1
+_program
+  #1
+  _class
+    Main
+    Object
+    "test/e2e/parser/less_or_eq.cl"
+    (
+    #2
+    _attr
+      a
+      Int
+      #2
+      _int
+        1
+      : _no_type
+    #3
+    _attr
+      b
+      Int
+      #3
+      _int
+        2
+      : _no_type
+    #5
+    _method
+      main
+      Object
+      #6
+      _block
+        #7
+        _lt
+          #7
+          _object
+            a
+          : _no_type
+          #7
+          _object
+            b
+          : _no_type
+        : _no_type
+        #8
+        _leq
+          #8
+          _object
+            a
+          : _no_type
+          #8
+          _object
+            b
+          : _no_type
+        : _no_type
+      : _no_type
+    )
