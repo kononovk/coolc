@@ -84,10 +84,7 @@ constexpr const char* GetExpressionName() {
 }
 
 std::string MakeOffsetString(int offset) {
-  std::string offset_str;
-  offset_str.reserve(offset + 2);
-  offset_str = std::string(offset, ' ');
-  return offset_str;
+  return std::string(offset, ' ');
 }
 
 void PrintExpression(const Expression& expression, int offset) {
