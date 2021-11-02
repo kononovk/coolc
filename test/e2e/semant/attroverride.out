@@ -1,0 +1,2 @@
+test/e2e/semant/attroverride.cl:8: Attribute moo is an attribute of an inherited class.
+Compilation halted due to static semantic errors.

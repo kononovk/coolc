@@ -1,0 +1,2 @@
+test/e2e/semant/badarith.cl:4: non-Int arguments: Int + String
+Compilation halted due to static semantic errors.

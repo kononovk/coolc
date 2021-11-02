@@ -1,0 +1,2 @@
+test/e2e/semant/outofscope.cl:3: Undeclared identifier x.
+Compilation halted due to static semantic errors.

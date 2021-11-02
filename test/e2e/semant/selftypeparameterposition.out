@@ -1,0 +1,2 @@
+test/e2e/semant/selftypeparameterposition.cl:4: Formal parameter x cannot have type SELF_TYPE.
+Compilation halted due to static semantic errors.

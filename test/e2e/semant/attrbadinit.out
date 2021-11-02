@@ -1,0 +1,2 @@
+test/e2e/semant/attrbadinit.cl:8: Undeclared identifier moo.
+Compilation halted due to static semantic errors.

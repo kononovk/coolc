@@ -1,0 +1,2 @@
+test/e2e/semant/redefinedobject.cl:3: Redefinition of basic class Object.
+Compilation halted due to static semantic errors.

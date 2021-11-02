@@ -1,0 +1,2 @@
+test/e2e/semant/selftyperedeclared.cl:3: Redefinition of basic class SELF_TYPE.
+Compilation halted due to static semantic errors.

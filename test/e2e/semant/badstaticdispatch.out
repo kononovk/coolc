@@ -1,0 +1,2 @@
+test/e2e/semant/badstaticdispatch.cl:11: Expression type SELF_TYPE does not conform to declared static dispatch type C.
+Compilation halted due to static semantic errors.

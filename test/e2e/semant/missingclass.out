@@ -1,0 +1,2 @@
+test/e2e/semant/missingclass.cl:3: Class A inherits from an undefined class D.
+Compilation halted due to static semantic errors.

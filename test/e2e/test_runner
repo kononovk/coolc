@@ -28,7 +28,8 @@ def _main():
     executable = args.exec[0]
     tests = [f'{tests_dir}/{f}' for f in get_tests(tests_dir)]
     passed_tests = 0
-    err_string = b'Compilation halted due to lex and parse errors'
+    # Each compile time message has this string
+    err_string = b'Compilation halted due to'
     for f in tests:
         (stdout, stderr) = subprocess.Popen(f'{executable} {f}.cl'.split(),
                                             stdout=subprocess.PIPE,
