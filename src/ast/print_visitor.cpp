@@ -82,7 +82,7 @@ std::string MakeOffsetString(int offset) {
 void PrintExpression(const Expression& expression, int offset) {
   std::string offset_str = MakeOffsetString(offset);
 
-  std::visit(util::overloaded{[&offset_str](const ExpressionT auto& expr) {
+  std::visit(util::Overloaded{[&offset_str](const ExpressionT auto& expr) {
                std::cout << offset_str << '#' << expr.line_number << std::endl;
                if constexpr (std::same_as<std::decay_t<decltype(expr)>, Dispatch>) {
                  std::cout << offset_str << (expr.type_id ? "_static" : "") << "_dispatch" << std::endl;
@@ -95,7 +95,7 @@ void PrintExpression(const Expression& expression, int offset) {
   offset += 2;
   offset_str += "  ";
 
-  auto visitor = util::overloaded{
+  auto visitor = util::Overloaded{
       [offset](const BinaryExpressionT auto& expr) {
         PrintExpression(*expr.lhs, offset);
         PrintExpression(*expr.rhs, offset);
@@ -184,7 +184,7 @@ void PrintFeature(const Feature& f, int offset) {
   auto offset_str = MakeOffsetString(offset);
 
   // clang-format off
-  auto visitor = util::overloaded {
+  auto visitor = util::Overloaded {
     [&offset_str](const Method& m) {
       std::cout << offset_str << '#' << m.line_number << std::endl
                 << offset_str << "_method" << std::endl;

@@ -37,7 +37,7 @@ bool Semant::FillContent(const Class& cl) {
 
   for (auto i : cl.features) {
     bool err =
-        std::visit(util::overloaded{[&](const Attribute& a) { return _ctx.AddAttribute(a.object_id, a.type_id); },
+        std::visit(util::Overloaded{[&](const Attribute& a) { return _ctx.AddAttribute(a.object_id, a.type_id); },
                                     [&](const Method& a) {
                                       std::vector<std::string> arg_types;
                                       for (const auto& el : a.formals) {
@@ -71,7 +71,7 @@ bool Semant::CheckClass(const Class& cl) {
 }
 
 bool Semant::CheckFeature(const Feature& f) {
-  auto kek = std::visit(util::overloaded{[this](const Method& m) { return CheckMethod(m); },
+  auto kek = std::visit(util::Overloaded{[this](const Method& m) { return CheckMethod(m); },
                                          [this](const Attribute& a) { return CheckAttribute(a); }},
                         f.feature);
   return kek;
@@ -332,7 +332,7 @@ MaybeType Semant::CheckNew(const New& a) {
 MaybeType Semant::CheckExpression(std::shared_ptr<Expression> expr) {
   // clang-format off
   auto type = std::visit(
-      util::overloaded{
+      util::Overloaded{
           [](const Int&) -> MaybeType { return "Int"; },
           [](const String&) -> MaybeType { return "String"; },
           [](const Bool&) -> MaybeType { return "Bool"; },

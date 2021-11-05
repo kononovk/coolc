@@ -1,6 +1,8 @@
 #pragma once
 #include <stack>
 
+constexpr int a = 0;
+
 namespace coolc {
 
 struct Scope {
@@ -146,7 +148,7 @@ struct Scope {
 };
 
 struct ScopeGuard {
-  ScopeGuard(Scope* scope) : curr_scope{scope} {
+  explicit ScopeGuard(Scope* scope) : curr_scope{scope} {
     curr_scope->Push();
   }
 
