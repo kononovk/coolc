@@ -4,7 +4,7 @@ _program
   _class
     CellularAutomaton
     IO
-    "test/e2e/semant/cells.cl.cl"
+    "test/e2e/semant/cells.cl"
     (
     #6
     _attr
@@ -494,7 +494,7 @@ _program
   _class
     Main
     Object
-    "test/e2e/semant/cells.cl.cl"
+    "test/e2e/semant/cells.cl"
     (
     #79
     _attr

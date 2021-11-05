@@ -19,6 +19,7 @@ add_subdirectory(token)
 add_subdirectory(parser)
 add_subdirectory(util)
 add_subdirectory(ast)
+add_subdirectory(semant)
 
 add_library(
         lib${PROJECT_NAME} STATIC

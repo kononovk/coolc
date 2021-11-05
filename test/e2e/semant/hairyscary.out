@@ -4,7 +4,7 @@ _program
   _class
     Foo
     Bazz
-    "test/e2e/semant/hairyscary.cl.cl"
+    "test/e2e/semant/hairyscary.cl"
     (
     #4
     _attr
@@ -134,7 +134,7 @@ _program
   _class
     Bar
     Razz
-    "test/e2e/semant/hairyscary.cl.cl"
+    "test/e2e/semant/hairyscary.cl"
     (
     #18
     _attr
@@ -169,7 +169,7 @@ _program
   _class
     Razz
     Foo
-    "test/e2e/semant/hairyscary.cl.cl"
+    "test/e2e/semant/hairyscary.cl"
     (
     #26
     _attr
@@ -270,7 +270,7 @@ _program
   _class
     Bazz
     IO
-    "test/e2e/semant/hairyscary.cl.cl"
+    "test/e2e/semant/hairyscary.cl"
     (
     #37
     _attr
@@ -402,7 +402,7 @@ _program
   _class
     Main
     Object
-    "test/e2e/semant/hairyscary.cl.cl"
+    "test/e2e/semant/hairyscary.cl"
     (
     #55
     _attr

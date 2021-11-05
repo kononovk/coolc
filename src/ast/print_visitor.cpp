@@ -6,14 +6,6 @@
 namespace coolc {
 namespace {
 
-template <class... Ts>
-struct overloaded : Ts... {
-  using Ts::operator()...;
-};
-
-template <class... Ts>
-overloaded(Ts...) -> overloaded<Ts...>;
-
 template <BinaryExpressionT T>
 constexpr const char* GetBinaryExpressionName() {
   if constexpr (std::is_same_v<T, Plus>) {
@@ -90,7 +82,7 @@ std::string MakeOffsetString(int offset) {
 void PrintExpression(const Expression& expression, int offset) {
   std::string offset_str = MakeOffsetString(offset);
 
-  std::visit(overloaded{[&offset_str](const ExpressionT auto& expr) {
+  std::visit(util::overloaded{[&offset_str](const ExpressionT auto& expr) {
                std::cout << offset_str << '#' << expr.line_number << std::endl;
                if constexpr (std::same_as<std::decay_t<decltype(expr)>, Dispatch>) {
                  std::cout << offset_str << (expr.type_id ? "_static" : "") << "_dispatch" << std::endl;
@@ -103,7 +95,7 @@ void PrintExpression(const Expression& expression, int offset) {
   offset += 2;
   offset_str += "  ";
 
-  auto visitor = overloaded{
+  auto visitor = util::overloaded{
       [offset](const BinaryExpressionT auto& expr) {
         PrintExpression(*expr.lhs, offset);
         PrintExpression(*expr.rhs, offset);
@@ -143,7 +135,7 @@ void PrintExpression(const Expression& expression, int offset) {
           std::cout << std::string(offset, ' ') << expr.attrs[i].object_id << std::endl;
           std::cout << std::string(offset, ' ') << expr.attrs[i].type_id << std::endl;
           if (args[i].expr) {
-            PrintExpression(**args[i].expr, offset);
+            PrintExpression(*args[i].expr, offset);
           }
           offset += 2;
         }
@@ -160,7 +152,7 @@ void PrintExpression(const Expression& expression, int offset) {
                     << offset_str << "_branch" << std::endl
                     << offset_str << "  " << el.object_id << std::endl
                     << offset_str << "  " << el.type_id << std::endl;
-          PrintExpression(**el.expr, offset + 2);
+          PrintExpression(*el.expr, offset + 2);
         }
       },
       [offset, &offset_str](const Dispatch& expr) {
@@ -177,7 +169,7 @@ void PrintExpression(const Expression& expression, int offset) {
       [](const auto&) { std::terminate(); }};
 
   std::visit(visitor, expression.data_);
-  std::cout << std::string(offset - 2, ' ') << ": _no_type" << std::endl;
+  std::cout << std::string(offset - 2, ' ') << ": " << expression.type << std::endl;
 }
 
 void PrintFormal(const Formal& f, int offset) {
@@ -192,7 +184,7 @@ void PrintFeature(const Feature& f, int offset) {
   auto offset_str = MakeOffsetString(offset);
 
   // clang-format off
-  auto visitor = overloaded {
+  auto visitor = util::overloaded {
     [&offset_str](const Method& m) {
       std::cout << offset_str << '#' << m.line_number << std::endl
                 << offset_str << "_method" << std::endl;
@@ -208,7 +200,7 @@ void PrintFeature(const Feature& f, int offset) {
       std::cout << offset_str << '#' << a.line_number << std::endl << offset_str << "_attr" << std::endl;
       offset_str += "  ";
       std::cout << offset_str << a.object_id << std::endl << offset_str << a.type_id << std::endl;
-      PrintExpression(**a.expr, offset_str.size());
+      PrintExpression(*a.expr, offset_str.size());
     }
   };
   // clang-format on

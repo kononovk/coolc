@@ -4,7 +4,7 @@ _program
   _class
     List
     Object
-    "test/e2e/semant/list.cl.cl"
+    "test/e2e/semant/list.cl"
     (
     #29
     _method
@@ -87,7 +87,7 @@ _program
   _class
     Cons
     List
-    "test/e2e/semant/list.cl.cl"
+    "test/e2e/semant/list.cl"
     (
     #72
     _attr
@@ -167,7 +167,7 @@ _program
   _class
     Main
     IO
-    "test/e2e/semant/list.cl.cl"
+    "test/e2e/semant/list.cl"
     (
     #102
     _attr

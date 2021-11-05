@@ -303,7 +303,7 @@ Expression Parser::ParseAtom() {
     return exp;
   }
   if (next_->type == Token::Type::ObjectID) {
-    Id res{line, *next_->lexeme};
+    Id res{{line}, *next_->lexeme};
     ++next_;
     return {std::move(res)};
   }

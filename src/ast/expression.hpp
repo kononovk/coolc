@@ -39,7 +39,7 @@ struct Method : TypedId {
 
 /// Attribute = Id : Type [ <- expr ]
 struct Attribute : TypedId {
-  std::optional<std::shared_ptr<Expression>> expr;
+  std::shared_ptr<Expression> expr;
 };
 
 /// Feature = Method | Attribute
@@ -108,6 +108,9 @@ struct Bool : LineNumbered {
   bool value;
 };
 
+template <typename T>
+concept IsBasicT = util::IsOneOfV<T, Bool, String, Int>;
+
 /// Other
 struct If : LineNumbered {
   std::shared_ptr<Expression> condition;
@@ -161,6 +164,12 @@ concept ExpressionT = BinaryExpressionT<T> || UnaryExpressionT<T> ||
                                      Int, String, Bool,  // Type constants
                                      Id, New, Dispatch, Assign, If, While, Case, Let, Block>;
 
+template <typename T>
+concept Arithmetic = util::IsOneOfV<T, Plus, Mul, Div, Sub>;
+
+template <typename T>
+concept Comparison = util::IsOneOfV<T, Less, LessEq>;
+
 /**
  * Main Expression class
  */
@@ -171,6 +180,8 @@ struct Expression {
                Int, String, Bool,                         // Type constants
                Id, New, Dispatch, Assign, If, While, Case, Let, Block>
       data_{Empty{}};
+
+  std::string type{"_no_type"};
 
   template <typename T>
   requires ExpressionT<std::remove_cvref_t<T>> Expression(T&& data) : data_{std::forward<T>(data)} {
