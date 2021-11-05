@@ -22,7 +22,7 @@ jobs:
         build_type: [ RelWithDebInfo ]
         stl_implementation: [ libstdc++ ]
         sanitizer: [ ASAN, TSAN, UBSAN, OFF ]
-        target: [ lexer, parser ]
+        target: [ lexer, parser, semant ]
 
     name: "${{ matrix.target }} / ${{ matrix.config.os }} / ${{ matrix.sanitizer }}"
     steps:
