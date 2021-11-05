@@ -42,14 +42,14 @@ class Parser {
 
   std::vector<std::shared_ptr<Expression>> GetParameterList();
 
-  /// Check condition. If false terminate program with error in stderr
+  /// FillAndCheck condition. If false terminate program with error in stderr
   void Assert(bool condition);
 
-  /// Check current token type.
+  /// FillAndCheck current token type.
   /// If true move next_, otherwise terminate program with error in stderr
   void AssertMatch(Token::Type);
 
-  /// Check current token type.
+  /// FillAndCheck current token type.
   /// If true move next_, otherwise return false
   bool Match(Token::Type);
 

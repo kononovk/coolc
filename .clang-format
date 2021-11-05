@@ -14,10 +14,8 @@ AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 
 IncludeCategories:
-  - Regex: '^".*"$'              # relative includes
+  - Regex: '^".*"$'              # coolc includes
     Priority: 10
-  - Regex: '^<.*\.hpp>$'         # coolc includes
-    Priority: 20
   - Regex: '^<[[:alpha:]_\/]+>$' # STL
     Priority: 30
   - Regex: '.*'                  # other libraries

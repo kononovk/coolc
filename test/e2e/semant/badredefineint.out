@@ -1,0 +1,2 @@
+test/e2e/semant/badredefineint.cl:3: Redefinition of basic class Int.
+Compilation halted due to static semantic errors.

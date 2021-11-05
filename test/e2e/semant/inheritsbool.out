@@ -1,0 +1,2 @@
+test/e2e/semant/inheritsbool.cl:8: Class B cannot inherit class Bool.
+Compilation halted due to static semantic errors.
