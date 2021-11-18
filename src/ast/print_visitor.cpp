@@ -125,7 +125,7 @@ void PrintExpression(const Expression& expression, int offset) {
         std::cout << offset_str << expr.identifier << std::endl;
         PrintExpression(*expr.rhs, offset_str.size());
       },
-      [offset](const Let& expr) mutable {
+      [offset, &expression](const Let& expr) mutable {
         const auto& args = expr.attrs;
         for (std::size_t i = 0; i < args.size(); ++i) {
           if (i != 0) {
@@ -142,7 +142,7 @@ void PrintExpression(const Expression& expression, int offset) {
         PrintExpression(*expr.expr, offset - 2);
         for (std::size_t i = 1; i < args.size(); ++i) {
           offset -= 2;
-          std::cout << std::string(offset - 2, ' ') << ": _no_type" << std::endl;
+          std::cout << std::string(offset - 2, ' ') << ": " << expression.type << std::endl;
         }
       },
       [offset, &offset_str](const Case& expr) {

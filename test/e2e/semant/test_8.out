@@ -1,0 +1,708 @@
+#24
+_program
+  #24
+  _class
+    List
+    IO
+    "test/e2e/semant/test_8.cl"
+    (
+    #28
+    _method
+      isNil
+      Bool
+      #28
+      _block
+        #28
+        _dispatch
+          #28
+          _object
+            self
+          : SELF_TYPE
+          abort
+          (
+          )
+        : Object
+        #28
+        _bool
+          1
+        : Bool
+      : Bool
+    #30
+    _method
+      cons
+      #30
+      _formal
+        hd
+        Int
+      Cons
+      #31
+      _let
+        new_cell
+        Cons
+        #31
+        _new
+          Cons
+        : Cons
+        #32
+        _dispatch
+          #32
+          _object
+            new_cell
+          : Cons
+          init
+          (
+          #32
+          _object
+            hd
+          : Int
+          #32
+          _object
+            self
+          : SELF_TYPE
+          )
+        : Cons
+      : Cons
+    #41
+    _method
+      car
+      Int
+      #41
+      _block
+        #41
+        _dispatch
+          #41
+          _object
+            self
+          : SELF_TYPE
+          abort
+          (
+          )
+        : Object
+        #41
+        _new
+          Int
+        : Int
+      : Int
+    #43
+    _method
+      cdr
+      List
+      #43
+      _block
+        #43
+        _dispatch
+          #43
+          _object
+            self
+          : SELF_TYPE
+          abort
+          (
+          )
+        : Object
+        #43
+        _new
+          List
+        : List
+      : List
+    #45
+    _method
+      rev
+      List
+      #45
+      _dispatch
+        #45
+        _object
+          self
+        : SELF_TYPE
+        cdr
+        (
+        )
+      : List
+    #47
+    _method
+      sort
+      List
+      #47
+      _dispatch
+        #47
+        _object
+          self
+        : SELF_TYPE
+        cdr
+        (
+        )
+      : List
+    #49
+    _method
+      insert
+      #49
+      _formal
+        i
+        Int
+      List
+      #49
+      _dispatch
+        #49
+        _object
+          self
+        : SELF_TYPE
+        cdr
+        (
+        )
+      : List
+    #51
+    _method
+      rcons
+      #51
+      _formal
+        i
+        Int
+      List
+      #51
+      _dispatch
+        #51
+        _object
+          self
+        : SELF_TYPE
+        cdr
+        (
+        )
+      : List
+    #53
+    _method
+      print_list
+      Object
+      #53
+      _dispatch
+        #53
+        _object
+          self
+        : SELF_TYPE
+        abort
+        (
+        )
+      : Object
+    )
+  #56
+  _class
+    Cons
+    List
+    "test/e2e/semant/test_8.cl"
+    (
+    #57
+    _attr
+      xcar
+      Int
+      #0
+      _no_expr
+      : _no_type
+    #58
+    _attr
+      xcdr
+      List
+      #0
+      _no_expr
+      : _no_type
+    #62
+    _method
+      isNil
+      Bool
+      #62
+      _bool
+        0
+      : Bool
+    #64
+    _method
+      init
+      #64
+      _formal
+        hd
+        Int
+      #64
+      _formal
+        tl
+        List
+      Cons
+      #65
+      _block
+        #66
+        _assign
+          xcar
+          #66
+          _object
+            hd
+          : Int
+        : Int
+        #67
+        _assign
+          xcdr
+          #67
+          _object
+            tl
+          : List
+        : List
+        #68
+        _object
+          self
+        : SELF_TYPE
+      : SELF_TYPE
+    #72
+    _method
+      car
+      Int
+      #72
+      _object
+        xcar
+      : Int
+    #74
+    _method
+      cdr
+      List
+      #74
+      _object
+        xcdr
+      : List
+    #76
+    _method
+      rev
+      List
+      #76
+      _dispatch
+        #76
+        _dispatch
+          #76
+          _object
+            xcdr
+          : List
+          rev
+          (
+          )
+        : List
+        rcons
+        (
+        #76
+        _object
+          xcar
+        : Int
+        )
+      : List
+    #78
+    _method
+      sort
+      List
+      #78
+      _dispatch
+        #78
+        _dispatch
+          #78
+          _object
+            xcdr
+          : List
+          sort
+          (
+          )
+        : List
+        insert
+        (
+        #78
+        _object
+          xcar
+        : Int
+        )
+      : List
+    #80
+    _method
+      insert
+      #80
+      _formal
+        i
+        Int
+      List
+      #81
+      _cond
+        #81
+        _lt
+          #81
+          _object
+            i
+          : Int
+          #81
+          _object
+            xcar
+          : Int
+        : Bool
+        #82
+        _dispatch
+          #82
+          _new
+            Cons
+          : Cons
+          init
+          (
+          #82
+          _object
+            i
+          : Int
+          #82
+          _object
+            self
+          : SELF_TYPE
+          )
+        : Cons
+        #84
+        _dispatch
+          #84
+          _new
+            Cons
+          : Cons
+          init
+          (
+          #84
+          _object
+            xcar
+          : Int
+          #84
+          _dispatch
+            #84
+            _object
+              xcdr
+            : List
+            insert
+            (
+            #84
+            _object
+              i
+            : Int
+            )
+          : List
+          )
+        : Cons
+      : Cons
+    #89
+    _method
+      rcons
+      #89
+      _formal
+        i
+        Int
+      List
+      #89
+      _dispatch
+        #89
+        _new
+          Cons
+        : Cons
+        init
+        (
+        #89
+        _object
+          xcar
+        : Int
+        #89
+        _dispatch
+          #89
+          _object
+            xcdr
+          : List
+          rcons
+          (
+          #89
+          _object
+            i
+          : Int
+          )
+        : List
+        )
+      : Cons
+    #91
+    _method
+      print_list
+      Object
+      #92
+      _block
+        #93
+        _dispatch
+          #93
+          _object
+            self
+          : SELF_TYPE
+          out_int
+          (
+          #93
+          _object
+            xcar
+          : Int
+          )
+        : SELF_TYPE
+        #94
+        _dispatch
+          #94
+          _object
+            self
+          : SELF_TYPE
+          out_string
+          (
+          #94
+          _string
+            "\n"
+          : String
+          )
+        : SELF_TYPE
+        #95
+        _dispatch
+          #95
+          _object
+            xcdr
+          : List
+          print_list
+          (
+          )
+        : Object
+      : Object
+    )
+  #100
+  _class
+    Nil
+    List
+    "test/e2e/semant/test_8.cl"
+    (
+    #101
+    _method
+      isNil
+      Bool
+      #101
+      _bool
+        1
+      : Bool
+    #103
+    _method
+      rev
+      List
+      #103
+      _object
+        self
+      : SELF_TYPE
+    #105
+    _method
+      sort
+      List
+      #105
+      _object
+        self
+      : SELF_TYPE
+    #107
+    _method
+      insert
+      #107
+      _formal
+        i
+        Int
+      List
+      #107
+      _dispatch
+        #107
+        _object
+          self
+        : SELF_TYPE
+        rcons
+        (
+        #107
+        _object
+          i
+        : Int
+        )
+      : List
+    #109
+    _method
+      rcons
+      #109
+      _formal
+        i
+        Int
+      List
+      #109
+      _dispatch
+        #109
+        _new
+          Cons
+        : Cons
+        init
+        (
+        #109
+        _object
+          i
+        : Int
+        #109
+        _object
+          self
+        : SELF_TYPE
+        )
+      : Cons
+    #111
+    _method
+      print_list
+      Object
+      #111
+      _bool
+        1
+      : Bool
+    )
+  #116
+  _class
+    Main
+    IO
+    "test/e2e/semant/test_8.cl"
+    (
+    #118
+    _attr
+      l
+      List
+      #0
+      _no_expr
+      : _no_type
+    #121
+    _method
+      iota
+      #121
+      _formal
+        i
+        Int
+      List
+      #122
+      _block
+        #123
+        _assign
+          l
+          #123
+          _new
+            Nil
+          : Nil
+        : Nil
+        #124
+        _let
+          j
+          Int
+          #124
+          _int
+            0
+          : Int
+          #125
+          _loop
+            #125
+            _lt
+              #125
+              _object
+                j
+              : Int
+              #125
+              _object
+                i
+              : Int
+            : Bool
+            #127
+            _block
+              #128
+              _assign
+                l
+                #128
+                _dispatch
+                  #128
+                  _new
+                    Cons
+                  : Cons
+                  init
+                  (
+                  #128
+                  _object
+                    j
+                  : Int
+                  #128
+                  _object
+                    l
+                  : List
+                  )
+                : Cons
+              : Cons
+              #129
+              _assign
+                j
+                #129
+                _plus
+                  #129
+                  _object
+                    j
+                  : Int
+                  #129
+                  _int
+                    1
+                  : Int
+                : Int
+              : Int
+            : Int
+          : Object
+        : Object
+        #133
+        _object
+          l
+        : List
+      : List
+    #137
+    _method
+      main
+      Object
+      #138
+      _block
+        #139
+        _dispatch
+          #139
+          _object
+            self
+          : SELF_TYPE
+          out_string
+          (
+          #139
+          _string
+            "How many numbers to sort?"
+          : String
+          )
+        : SELF_TYPE
+        #140
+        _dispatch
+          #140
+          _dispatch
+            #140
+            _dispatch
+              #140
+              _dispatch
+                #140
+                _object
+                  self
+                : SELF_TYPE
+                iota
+                (
+                #140
+                _dispatch
+                  #140
+                  _object
+                    self
+                  : SELF_TYPE
+                  in_int
+                  (
+                  )
+                : Int
+                )
+              : List
+              rev
+              (
+              )
+            : List
+            sort
+            (
+            )
+          : List
+          print_list
+          (
+          )
+        : Object
+      : Object
+    )
