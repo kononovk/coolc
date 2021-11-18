@@ -1,0 +1,72 @@
+#1
+_program
+  #1
+  _class
+    A
+    Object
+    "test/e2e/semant/case_self2.cl"
+    (
+    )
+  #2
+  _class
+    B
+    Object
+    "test/e2e/semant/case_self2.cl"
+    (
+    )
+  #4
+  _class
+    Main
+    IO
+    "test/e2e/semant/case_self2.cl"
+    (
+    #5
+    _method
+      main
+      Object
+      #6
+      _int
+        1
+      : Int
+    #9
+    _method
+      foo
+      #9
+      _formal
+        obj
+        Object
+      Object
+      #10
+      _typcase
+        #10
+        _object
+          obj
+        : Object
+        #11
+        _branch
+          a
+          A
+          #11
+          _dispatch
+            #11
+            _object
+              self
+            : SELF_TYPE
+            out_string
+            (
+            #11
+            _string
+              "This is A."
+            : String
+            )
+          : SELF_TYPE
+        #12
+        _branch
+          b
+          B
+          #12
+          _new
+            Main
+          : Main
+      : Main
+    )
