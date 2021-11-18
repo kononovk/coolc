@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include <vector>
 
 constexpr int a = 0;
 
@@ -26,11 +27,10 @@ struct Scope {
     }
   };
 
-  std::stack<ObjectSet> objects;
+  std::vector<std::unordered_map<ObjectName, TypeName>> objects;
   std::stack<ObjectSet> methods;
   std::unordered_map<ClassName, std::unordered_map<ObjectName, TypeName>> attr_table;
   std::unordered_map<ClassName, std::unordered_map<MethodName, MethodTypes>> method_table;
-  std::unordered_map<ObjectName, std::stack<TypeName>> objects_stack;
   std::string current_class;
   const InheritanceGraph& _ig;
 
@@ -48,14 +48,14 @@ struct Scope {
   }
 
   void Push() {
-    objects.push({});
+    objects.push_back({});
     methods.push({});
     attr_table[current_class]["self"] = "SELF_TYPE";
   }
 
   void Pop() {
     assert(objects.size() > 0 && methods.size() > 0);
-    objects.pop();
+    objects.pop_back();
     methods.pop();
   }
 
@@ -105,20 +105,18 @@ struct Scope {
   bool AddAttribute(std::string name, std::string type) {
     CHECK_ERROR(name != "self")
     CHECK_ERROR(!GetAttrObject(name))
-    objects.top().insert(name);
-    objects_stack[name].push(type);
+    objects.back().insert({name, type});
     attr_table[current_class][std::move(name)] = std::move(type);
     return true;
   }
 
-  bool AddObject(std::string name, std::string type) {
+  bool AddObject(ObjectName name, TypeName type) {
     assert(objects.size() > 0 && methods.size() > 0);
     CHECK_ERROR(name != "self")
-    CHECK_ERROR(objects.top().insert(name).second)
+    CHECK_ERROR(objects.back().insert({name, type}).second)
     if (type != "SELF_TYPE") {
       CHECK_ERROR(_ig.HasClass(type))
     }
-    objects_stack[std::move(name)].push(std::move(type));
     return true;
   }
 
@@ -130,11 +128,15 @@ struct Scope {
     current_class.clear();
   }
 
-  std::optional<TypeName> GetAttrObject(std::string name) {
-    if (objects.top().contains(name)) {
-      return objects_stack[name].top();
+  std::optional<TypeName> GetAttrObject(ObjectName name) {
+    // get object
+    for (auto it = objects.rbegin(); it != objects.rend(); ++it) {
+      if (it->contains(name)) {
+        return it->at(name);
+      }
     }
 
+    // get attribute
     std::string curr = current_class;
     while (curr != "Object") {
       if (attr_table[curr].contains(name)) {
@@ -153,8 +155,8 @@ struct ScopeGuard {
   }
 
   ScopeGuard(Scope* scope, const Class& cl) : curr_scope{scope}, new_class{true} {
-    curr_scope->Push();
     curr_scope->EnterClass(cl.type);
+    curr_scope->Push();
   }
 
   ~ScopeGuard() {

@@ -71,10 +71,9 @@ bool Semant::CheckClass(const Class& cl) {
 }
 
 bool Semant::CheckFeature(const Feature& f) {
-  auto kek = std::visit(util::Overloaded{[this](const Method& m) { return CheckMethod(m); },
-                                         [this](const Attribute& a) { return CheckAttribute(a); }},
-                        f.feature);
-  return kek;
+  return std::visit(util::Overloaded{[this](const Method& m) { return CheckMethod(m); },
+                                     [this](const Attribute& a) { return CheckAttribute(a); }},
+                    f.feature);
 }
 
 bool Semant::CheckMethod(const Method& m) {
@@ -168,6 +167,10 @@ MaybeType Semant::CheckIf(const If& a) {
   CHECK_NULLOPT(then_type)
   auto else_type = CheckExpression(a.else_expr);
   CHECK_NULLOPT(else_type)
+  // TODO: to think about this code, its bad and maybe incorrect (!?)
+  if (*then_type == "SELF_TYPE" && *else_type == "SELF_TYPE") {
+    return {"SELF_TYPE"};
+  }
   if (*then_type == "SELF_TYPE") {
     *then_type = _ctx.current_class;
   }
@@ -246,11 +249,24 @@ MaybeType Semant::CheckCase(const Case& a) {
     CHECK_NULLOPT(type)
     types.emplace_back(std::move(*type));
   }
-  auto result = types[0];
+
+  std::string result = types[0];
+  std::size_t self_type_counter{0};
+  if (result == "SELF_TYPE") {
+    result = _ctx.current_class;
+    self_type_counter++;
+  }
   for (size_t i = 1; i < types.size(); i++) {
+    if (types[i] == "SELF_TYPE") {
+      types[i] = _ctx.current_class;
+      self_type_counter++;
+    }
     result = _ig.GetLca(result, types[i]);
   }
-  return result;
+  if (self_type_counter == types.size()) {
+    return {"SELF_TYPE"};
+  }
+  return {result};
 }
 
 MaybeType Semant::CheckDispatch(const Dispatch& a) {
@@ -303,7 +319,8 @@ MaybeType Semant::CheckDispatch(const Dispatch& a) {
   }
 
   auto result = d->return_type == "SELF_TYPE" ? dispatch_type : d->return_type;
-  if (a.expr->Is<Id>() && a.expr->As<Id>()->name == "self" && d->return_type == "SELF_TYPE") {
+  if (d->return_type == "SELF_TYPE" && ((a.expr->Is<Id>() && a.expr->As<Id>()->name == "self") ||
+                                        (a.expr->Is<Dispatch>() && a.expr->type == "SELF_TYPE"))) {
     return "SELF_TYPE";
   }
   return result;
